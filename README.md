@@ -1,6 +1,6 @@
 # Servy
 
-**TODO: Add description**
+**API endpoint on Elixir**
 
 ## Installation
 
