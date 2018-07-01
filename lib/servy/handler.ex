@@ -1,18 +1,5 @@
-defmodule Servy.Handler do
-  @pages_path Path.expand("../../pages", __DIR__)
-
+defmodule Servy.Plugins do
   require Logger
-
-  def handle(request) do
-    request
-    |> parse
-    |> rewrite_path
-    |> log
-    |> route
-    |> track
-    |> format_response
-  end
-
   def track(%{ status: 404, path: path } = conv) do
     Logger.error "The path #{path} is on the loose..."
     conv
@@ -30,6 +17,23 @@ defmodule Servy.Handler do
     Logger.info "Logger: #{inspect conv}..."
     conv
   end
+end
+
+
+defmodule Servy.Handler do
+  @pages_path Path.expand("../../pages", __DIR__)
+
+
+  def handle(request) do
+    request
+    |> parse
+    |> Servy.Plugins.rewrite_path
+    |> Servy.Plugins.log
+    |> route
+    |> Servy.Plugins.track
+    |> format_response
+  end
+
 
   def parse(request) do
     [method, path, _] =
