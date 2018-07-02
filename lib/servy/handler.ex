@@ -35,9 +35,9 @@ defmodule Servy.Handler do
   end
   # name=Piliu&type=White
   def route(%Conv{ method: "POST", path: "/bears" } = conv) do
-    params = %{ "name" => "Piliu", "type" => "White" }
+    # params = %{ "name" => "Piliu", "type" => "White" }
     %{ conv | status: 201,
-              resp_body: "Created a bear: #{params["type"]} with name #{params["name"]}" }
+              resp_body: "Created a bear: #{conv.params["type"]} with name #{conv.params["name"]}" }
   end
 
   def route(%Conv{ method: "GET", path: "/about" } = conv) do
