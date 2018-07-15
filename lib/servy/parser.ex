@@ -9,7 +9,7 @@ defmodule Servy.Parser do
 
     [method, path, _] = String.split(request_line, " ")
 
-    headers = parse_headers(header_lines)
+    headers = parse_headers(header_lines, %{})
 
     params = parse_params(params_string)
 
@@ -23,20 +23,16 @@ defmodule Servy.Parser do
     }
   end
 
-  def parse_headers([head | tail]) do
-    IO.puts "Head: #{inspect(head)}, tail: #{inspect(tail)}"
+  def parse_headers([head | tail], headers) do
 
     [key, value] = String.split(head, ": ")
-    IO.puts "Key: #{inspect(key)}, value: #{inspect(value)}"
 
-    headers = Map.put(%{}, key, value)
+    headers = Map.put(headers, key, value)
 
-    IO.puts "Headers: #{inspect(headers)}"
-
-    parse_headers(tail)
+    parse_headers(tail, headers)
   end
 
-  def parse_headers([]), do: IO.puts "Done!!!"
+  def parse_headers([], headers), do: headers
 
   def parse_params(params_string) do
     params_string |> String.trim |> URI.decode_query
