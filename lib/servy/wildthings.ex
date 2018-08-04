@@ -1,4 +1,5 @@
 defmodule Servy.Wildthings do
+  require Logger
   alias Servy.Bear
 
   def list_bears do

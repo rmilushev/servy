@@ -28,7 +28,7 @@ defmodule Servy.Handler do
     BearController.index(conv)
   end
 
-  def route(%Conv{ method: "GET", path: "/bears" <> id } = conv) do
+  def route(%Conv{ method: "GET", path: "/bears/" <> id } = conv) do
     # %{ conv | status: 200, resp_body: "Bear #{id}" }
     params = Map.put(conv.params, "id", id)
     BearController.show(conv, params)
@@ -39,9 +39,6 @@ defmodule Servy.Handler do
   end
   # name=Piliu&type=White
   def route(%Conv{ method: "POST", path: "/bears" } = conv) do
-    # params = %{ "name" => "Piliu", "type" => "White" }
-    # %{ conv | status: 201,
-              # resp_body: "Created a bear: #{conv.params["type"]} with name #{conv.params["name"]}" }
     BearController.create(conv, conv.params)
   end
 
@@ -101,7 +98,7 @@ response = Servy.Handler.handle(request)
 IO.puts response
 
 request = """
-GET /bears HTTP/1.1
+GET /bigfoot HTTP/1.1
 Host: example.com
 User-Agent: ExampleBrowser/1.0
 Accept: */*
@@ -140,17 +137,6 @@ response = Servy.Handler.handle(request)
 IO.puts response
 
 
-request = """
-DELETE /bears/1 HTTP/1.1
-Host: example.com
-User-Agent: ExampleBrowser/1.0
-Accept: */*
-
-"""
-response = Servy.Handler.handle(request)
-
-IO.puts response
-
 
 request = """
 GET /wildlife HTTP/1.1
@@ -187,9 +173,9 @@ Accept: */*
 
 """
 
-response = Servy.Handler.handle(request)
-
-IO.puts response
+# response = Servy.Handler.handle(request)
+#
+# IO.puts response
 
 
 request = """
@@ -206,3 +192,15 @@ name=Pilr&type=White
 response = Servy.Handler.handle(request)
 
 IO.puts response
+
+request = """
+DELETE /bears/1 HTTP/1.1
+Host: example.com
+User-Agent: ExampleBrowser/1.0
+Accept: */*
+
+"""
+response = Servy.Handler.handle(request)
+
+IO.puts response
+

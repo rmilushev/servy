@@ -20,5 +20,3 @@ defmodule Servy.Plugins do
     conv
   end
 end
-
-
